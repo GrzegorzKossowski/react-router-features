@@ -1,0 +1,57 @@
+import React from 'react';
+import { NavLink } from 'react-router-dom';
+import { useAuth } from '../hooks/useAuth';
+import { AuthContextType } from '../types';
+
+interface NavBarProps {}
+
+const NavBar = ({ ...restProps }: NavBarProps) => {
+    const { auth, setAuth } = useAuth() as AuthContextType;
+
+    return (
+        <header className='bg-gray-800 text-white'>
+            <nav className='container flex flex-row justify-between items-center mx-auto py-4 text-2xl'>
+                <NavLink to={'/'} className={'py-2 px-3'}>
+                    Brand
+                </NavLink>
+                <ul className='flex space-x-2'>
+                    <li>
+                        <NavLink
+                            to={'/'}
+                            className={
+                                'hover:bg-slate-700 rounded-sm py-2 px-3'
+                            }
+                        >
+                            Home
+                        </NavLink>
+                    </li>
+                    {auth?.role ? (
+                        <li>
+                            <NavLink
+                                to={'/'}
+                                className={
+                                    'hover:bg-slate-700 rounded-sm py-2 px-3'
+                                }
+                            >
+                                Sign out
+                            </NavLink>
+                        </li>
+                    ) : (
+                        <li>
+                            <NavLink
+                                to={'/auth'}
+                                className={
+                                    'hover:bg-slate-700 rounded-sm py-2 px-3'
+                                }
+                            >
+                                Sign in
+                            </NavLink>
+                        </li>
+                    )}
+                </ul>
+            </nav>
+        </header>
+    );
+};
+
+export default NavBar;
