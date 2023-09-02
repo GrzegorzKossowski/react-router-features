@@ -1,5 +1,5 @@
-import React, { createContext, useMemo, useState } from 'react';
-import { AuthContextType } from '../types';
+import React, { SetStateAction, createContext, useMemo, useState } from 'react';
+import { AuthContextType, AuthType } from '../types';
 
 export const AuthContext = createContext({});
 
@@ -8,16 +8,16 @@ interface AuthProviderProps {
 }
 
 const AuthProvider = ({ children, ...restProps }: AuthProviderProps) => {
-    const [auth, setAuth] = useState<AuthContextType>();
+    const [role, setRole] = useState('');
 
     // https://react.dev/reference/react/useContext#optimizing-re-renders-when-passing-objects-and-functions
     // useMemo to optimise rerenders
     const contextValue = useMemo(
         () => ({
-            auth,
-            setAuth,
+            role,
+            setRole,
         }),
-        [auth]
+        [role]
     );
 
     return (

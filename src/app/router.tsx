@@ -2,6 +2,8 @@ import { createBrowserRouter, redirect } from 'react-router-dom';
 import RootLayout from '../layouts/RootLayout';
 import Home from '../pages/Home';
 import Auth from '../pages/Auth';
+import { useAuth } from '../hooks/useAuth';
+import { DashboardLayout } from '../layouts/DashboardLayout';
 
 export const router = createBrowserRouter([
     {
@@ -22,6 +24,16 @@ export const router = createBrowserRouter([
 
                     return redirect('/');
                 },
+            },
+            {
+                path: 'dashboard',
+                lazy: async () => {
+                    let { DashboardLayout } = await import(
+                        '../layouts/DashboardLayout'
+                    );
+                    return { Component: DashboardLayout };
+                },
+                errorElement: <>Error...</>,
             },
         ],
     },

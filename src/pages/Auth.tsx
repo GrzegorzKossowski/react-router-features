@@ -1,24 +1,35 @@
-import React from 'react';
-import { Form, useActionData, useLocation, useParams } from 'react-router-dom';
+import React, { useRef, useState } from 'react';
+import {
+    Form,
+    useActionData,
+    useLocation,
+    useNavigate,
+    useParams,
+} from 'react-router-dom';
+import { useAuth } from '../hooks/useAuth';
+import { AuthContextType, AuthType } from '../types';
 
 interface AuthProps {}
-interface FormData {
-    userRole?: string;
-    error?: boolean;
-    message?: string;
-}
 
 const Auth = ({ ...restProps }: AuthProps) => {
-    const data = useActionData() as FormData;
+    const navigate = useNavigate();
+    const { role, setRole } = useAuth() as AuthContextType;
+    const [roleSelected, setRoleSelected] = useState('user');
+    const onOptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setRoleSelected(event.target.value);
+    };
+
+    const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        console.log(roleSelected);
+        setRole(roleSelected);
+        navigate('/dashboard', { replace: true });
+    };
 
     return (
         <div className='w-full mt-10 flex justify-center items-center'>
-            <Form method='post' action='/auth'>
+            <form onSubmit={submitHandler}>
                 <h1 className='text-2xl font-bold mb-4'>Sign in as role</h1>
-                {data && data?.error && (
-                    <div className='text-red-600 mb-2'>{data?.message}</div>
-                )}
-
                 <div className='flex items-center mb-4'>
                     <input
                         id='user'
@@ -26,6 +37,8 @@ const Auth = ({ ...restProps }: AuthProps) => {
                         value='user'
                         name='userRole'
                         className='w-4 h-4'
+                        checked={roleSelected === 'user'}
+                        onChange={onOptionChange}
                     />
                     <label htmlFor='user' className='ml-2'>
                         User
@@ -38,6 +51,8 @@ const Auth = ({ ...restProps }: AuthProps) => {
                         value='editor'
                         name='userRole'
                         className='w-4 h-4'
+                        checked={roleSelected === 'editor'}
+                        onChange={onOptionChange}
                     />
                     <label htmlFor='editor' className='ml-2'>
                         Editor
@@ -50,6 +65,8 @@ const Auth = ({ ...restProps }: AuthProps) => {
                         value='manager'
                         name='userRole'
                         className='w-4 h-4'
+                        checked={roleSelected === 'manager'}
+                        onChange={onOptionChange}
                     />
                     <label htmlFor='manager' className='ml-2'>
                         Manager
@@ -62,15 +79,17 @@ const Auth = ({ ...restProps }: AuthProps) => {
                         value='admin'
                         name='userRole'
                         className='w-4 h-4'
+                        checked={roleSelected === 'admin'}
+                        onChange={onOptionChange}
                     />
                     <label htmlFor='admin' className='ml-2'>
                         Admin
                     </label>
                 </div>
                 <button className='border bg-slate-500 py-2 px-3 rounded-sm text-white'>
-                    Login
+                    Sign in
                 </button>
-            </Form>
+            </form>
         </div>
     );
 };

@@ -1,12 +1,18 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { AuthContextType } from '../types';
 
 interface NavBarProps {}
 
 const NavBar = ({ ...restProps }: NavBarProps) => {
-    const { auth, setAuth } = useAuth() as AuthContextType;
+    const navigate = useNavigate();
+    const { role, setRole } = useAuth() as AuthContextType;
+
+    function onSignOut() {
+        setRole('');
+        navigate('/', { replace: true });
+    }
 
     return (
         <header className='bg-gray-800 text-white'>
@@ -14,7 +20,9 @@ const NavBar = ({ ...restProps }: NavBarProps) => {
                 <NavLink to={'/'} className={'py-2 px-3'}>
                     Brand
                 </NavLink>
-                <ul className='flex space-x-2'>
+                <div className='text-slate-500'>{role}</div>
+
+                <ul className='flex items-center space-x-2'>
                     <li>
                         <NavLink
                             to={'/'}
@@ -25,17 +33,29 @@ const NavBar = ({ ...restProps }: NavBarProps) => {
                             Home
                         </NavLink>
                     </li>
-                    {auth?.role ? (
-                        <li>
-                            <NavLink
-                                to={'/'}
-                                className={
-                                    'hover:bg-slate-700 rounded-sm py-2 px-3'
-                                }
-                            >
-                                Sign out
-                            </NavLink>
-                        </li>
+                    {role ? (
+                        <>
+                            <li>
+                                <NavLink
+                                    to={'/dashboard'}
+                                    className={
+                                        'hover:bg-slate-700 rounded-sm py-2 px-3'
+                                    }
+                                >
+                                    Dashboard
+                                </NavLink>
+                            </li>
+                            <li>
+                                <div
+                                    className={
+                                        'hover:bg-slate-700 rounded-sm py-2 px-3'
+                                    }
+                                    onClick={onSignOut}
+                                >
+                                    Sign out
+                                </div>
+                            </li>
+                        </>
                     ) : (
                         <li>
                             <NavLink

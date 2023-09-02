@@ -1,6 +1,9 @@
+import { SetStateAction } from 'react';
+
 export type AuthContextType = {
-    auth: {
-        role?: string;
-    };
-    setAuth: () => {};
+    role: string;
+    setRole: React.Dispatch<React.SetStateAction<string>>;
+};
+export type AuthType = {
+    role: string;
 };
