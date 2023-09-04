@@ -1,5 +1,3 @@
-import React from 'react';
-
 interface HomeProps {}
 
 const Home = ({ ...restProps }: HomeProps) => {

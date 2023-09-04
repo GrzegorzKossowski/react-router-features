@@ -1,19 +1,15 @@
-import React, { useRef, useState } from 'react';
+import React, {  useState } from 'react';
 import {
-    Form,
-    useActionData,
-    useLocation,
     useNavigate,
-    useParams,
 } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
-import { AuthContextType, AuthType } from '../types';
+import { AuthContextType } from '../types';
 
 interface AuthProps {}
 
 const Auth = ({ ...restProps }: AuthProps) => {
     const navigate = useNavigate();
-    const { role, setRole } = useAuth() as AuthContextType;
+    const { setRole } = useAuth() as AuthContextType;
     const [roleSelected, setRoleSelected] = useState('user');
     const onOptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setRoleSelected(event.target.value);

@@ -1,6 +1,4 @@
-import React, { memo } from 'react';
-import { useAuth } from '../hooks/useAuth';
-import { AuthContextType } from '../types';
+import  { memo } from 'react';
 import CanBeSeen from './CanBeSeen';
 
 export const Admin = memo(() => {

@@ -1,7 +1,6 @@
 import { useAuth } from '../hooks/useAuth';
 import { AuthContextType } from '../types';
 import { Navigate, Outlet } from 'react-router-dom';
-import Unauthorized from './Unauthorized';
 
 const PrivateRoute = ({
     toLogin,
