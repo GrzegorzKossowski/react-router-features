@@ -21,6 +21,3 @@ content: [
 @tailwind utilities;
 ```
 
-https://youtu.be/tvE8B1HBoOQ?list=PL4cUxeGkcC9iVKmtNuCeIswnQ97in2GGf&t=625
-
-https://youtu.be/oUZjO00NkhY?t=390
